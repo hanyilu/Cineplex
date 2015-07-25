@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<constant name="struts.objectFactory" value="spring" />
+	
+	<package name="main" abstract="true" extends="struts-default">  
+		<global-results>  
+			<result name="message">message.jsp</result>
+		</global-results>  
+	</package> 
+	
+	<package name="employee" namespace="/employee" extends="main">  
+        <action name="login" class="com.cineplex.employee.action.LoginAction" method="login">
+            <result name="input">login.jsp</result> 
+            <result name="waiter" type="redirect">waiter/home.jsp</result> 
+            <result name="manager" type="redirect">manager/home.jsp</result> 
+        </action>
+    </package> 
+    
+    <package name="manager" namespace="/employee/manager" extends="main">  
+        <action name="getUnapprovedPlans" class="com.cineplex.employee.action.ApprovePlanAction" method="getUnapprovedPlans">
+            <result name="success">plan_list.jsp</result>
+        </action> 
+        <action name="viewPlan" class="com.cineplex.employee.action.ApprovePlanAction" method="viewPlan">
+            <result name="success">view_plan.jsp</result>
+        </action> 
+        <action name="approvePlan" class="com.cineplex.employee.action.ApprovePlanAction" method="approve">
+            <result name="success" type="redirectAction">getUnapprovedPlans</result>
+        </action> 
+        <action name="unapprovePlan" class="com.cineplex.employee.action.ApprovePlanAction" method="unapprove">
+            <result name="success" type="redirectAction">getUnapprovedPlans</result>
+        </action>
+        <action name="memberCharts" class="com.cineplex.employee.action.ChartsAction" method="getActivityChart">
+            <result name="success">member_charts.jsp</result>
+        </action>
+        <action name="cinemaCharts" class="com.cineplex.employee.action.ChartsAction" method="toCharts">
+            <result name="success">cinema_charts.jsp</result>
+        </action>
+        <action name="logout" class="com.cineplex.employee.action.LoginAction" method="logout">
+            <result name="success" type="redirect">../index.jsp</result>
+        </action>
+    </package> 
+    
+    <package name="waiter" namespace="/employee/waiter" extends="main">  
+        <action name="addFilm" class="com.cineplex.employee.action.AddFilmAction" method="addFilm">
+            <result name="input">add_film.jsp</result>
+        </action> 
+       <action name="makePlan" class="com.cineplex.employee.action.AddPlanAction" method="getFilmsList">
+            <result name="success">add_plan.jsp</result>
+        </action>
+        <action name="addPlan" class="com.cineplex.employee.action.AddPlanAction" method="addPlan">
+            <result name="input">add_plan.jsp</result>
+        </action> 
+        <action name="getEditPlan" class="com.cineplex.employee.action.EditPlanAction" method="getPlansToEdit">
+            <result name="success">plan_list.jsp</result>
+        </action> 
+        <action name="editPlan" class="com.cineplex.employee.action.EditPlanAction" method="editPlan">
+            <result name="success">edit_plan.jsp</result>
+        </action> 
+        <action name="submitEdit" class="com.cineplex.employee.action.EditPlanAction" method="submitEdit">
+            <result name="success" type="redirectAction">getEditPlan</result>
+        </action> 
+        <action name="getOnlineFilms" class="com.cineplex.employee.action.AddActivityAction" method="getOnlineFilms">
+            <result name="success">film_list.jsp</result>
+        </action>
+        <action name="getFilm" class="com.cineplex.employee.action.AddActivityAction" method="getFilmInfo">
+            <result name="success">add_activity.jsp</result>
+        </action>
+        <action name="addActivity" class="com.cineplex.employee.action.AddActivityAction" method="addActivity">
+        </action>
+        <action name="getTodayPlanItems" class="com.cineplex.employee.action.SalesAction" method="getTodayPlanItems">
+            <result name="success">plan_item_list.jsp</result>
+        </action>
+        <action name="sales" class="com.cineplex.employee.action.SalesAction" method="sales">
+            <result name="success" type="redirectAction">getTodayPlanItems</result>
+        </action>
+        <action name="logout" class="com.cineplex.employee.action.LoginAction" method="logout">
+            <result name="success" type="redirect">../index.jsp</result>
+        </action>
+    </package> 
+
+	<package name="member" namespace="/member" extends="main">  
+        <action name="login" class="com.cineplex.member.action.MemberAction" method="login">
+            <result name="input">login.jsp</result> 
+            <result name="success">home.jsp</result>  
+        </action>  
+        <action name="register" class="com.cineplex.member.action.RegisterAction" method="register">
+            <result name="input">register.jsp</result>
+        </action> 
+        <action name="getAccount" class="com.cineplex.member.action.RechargeAction" method="getBankAccount">
+            <result name="success">recharge.jsp</result>
+        </action> 
+        <action name="recharge" class="com.cineplex.member.action.RechargeAction" method="recharge">
+            <result name="input">recharge.jsp</result>
+        </action> 
+        <action name="cancelMember" class="com.cineplex.member.action.MemberAction" method="cancel">
+       		<result name="success" type="redirect">../index.jsp</result>
+        </action> 
+        <action name="logout" class="com.cineplex.member.action.MemberAction" method="logout">
+       		<result name="success" type="redirect">../index.jsp</result>
+        </action> 
+        <action name="getFilms" class="com.cineplex.member.action.PurchaseAction" method="getFilms">
+       		<result name="success">purchase.jsp</result>
+        </action>
+        <action name="getFilmInfo" class="com.cineplex.member.action.PurchaseAction" method="getFilmInfo">
+       		<result name="success">film_info.jsp</result>
+        </action>
+        <action name="purchase" class="com.cineplex.member.action.PurchaseAction" method="purchase">
+       		<result name="success">confirm.jsp</result>
+        </action>
+        <action name="pay" class="com.cineplex.member.action.PurchaseAction" method="pay">
+        </action>
+        <action name="getActivityList" class="com.cineplex.member.action.ActivityAction" method="getActivityList">
+       		<result name="success">activity_list.jsp</result>
+        </action>
+        <action name="getQuestions" class="com.cineplex.member.action.ActivityAction" method="getQuestions">
+       		<result name="success">questions.jsp</result>
+        </action>
+        <action name="submitAnswers" class="com.cineplex.member.action.ActivityAction" method="submitAnswers">
+        	<result name="success" type="redirectAction">getActivityList</result>
+        </action>
+        <action name="memberInfo" class="com.cineplex.member.action.MemberAction" method="getInfo">
+       		<result name="success">member_info.jsp</result>
+        </action>
+        <action name="getCredit" class="com.cineplex.member.action.MemberAction" method="getInfo">
+       		<result name="success">credit_change.jsp</result>
+        </action>
+        <action name="changeCredit" class="com.cineplex.member.action.MemberAction" method="changeCredit">
+       		<result name="success" type="redirectAction">memberInfo</result>
+        </action>
+        <action name="purchaseRecord" class="com.cineplex.member.action.MemberAction" method="getPurchaseRecord">
+       		<result name="success">purchase_record.jsp</result>
+        </action>
+        <action name="rechargeRecord" class="com.cineplex.member.action.MemberAction" method="getRechargeRecord">
+       		<result name="success">recharge_record.jsp</result>
+        </action>
+        <action name="editInfo" class="com.cineplex.member.action.MemberAction" method="getInfo">
+       		<result name="success">edit_info.jsp</result>
+        </action>
+        <action name="submitEditInfo" class="com.cineplex.member.action.MemberAction" method="saveInfo">
+       		<result name="success" type="redirectAction">memberInfo</result>
+        </action>
+        <action name="changePassword" class="com.cineplex.member.action.MemberAction" method="changePassword">
+       		<result name="success" type="redirectAction">memberInfo</result>
+        </action>
+    </package> 
+    
+    <package name="ajax" extends="json-default">
+	    <action name="loadMemberInfo" class="com.cineplex.employee.action.AjaxInfoAction" method="loadMemberInfo">
+	        <result name="success" type="json"></result>
+	    </action>
+	    <action name="loadMemberSalesInfo" class="com.cineplex.employee.action.AjaxInfoAction" method="loadMemberSalesInfo">
+	        <result name="success" type="json"></result>
+	    </action>
+	    <action name="loadMemberRechargesInfo" class="com.cineplex.employee.action.AjaxInfoAction" method="loadMemberRechargesInfo">
+	        <result name="success" type="json"></result>
+	    </action>
+	    <action name="loadSeatMap" class="com.cineplex.employee.action.AjaxInfoAction" method="loadSeatMap">
+	        <result name="success" type="json"></result>
+	    </action>
+	    
+	    <action name="memberAgeChart" class="com.cineplex.employee.action.ChartsAction" method="getMemberAgeChart">
+            <result name="success" type="json"></result>
+        </action>
+        <action name="memberGenderChart" class="com.cineplex.employee.action.ChartsAction" method="getMemberGenderChart">
+            <result name="success" type="json"></result>
+        </action>
+        <action name="memberAddressChart" class="com.cineplex.employee.action.ChartsAction" method="getMemberAddressChart">
+            <result name="success" type="json"></result>
+        </action>
+        <action name="memberCardStateChart" class="com.cineplex.employee.action.ChartsAction" method="getMemberCardStateChart">
+            <result name="success" type="json"></result>
+        </action>
+        <action name="filmSalesChart" class="com.cineplex.employee.action.ChartsAction" method="getFilmSalesChart">
+            <result name="success" type="json"></result>
+        </action>
+        <action name="payTypeChart" class="com.cineplex.employee.action.ChartsAction" method="getPayTypeChart">
+            <result name="success" type="json"></result>
+        </action>
+        <action name="personCountChart" class="com.cineplex.employee.action.ChartsAction" method="getPersonCountChart">
+            <result name="success" type="json"></result>
+        </action>
+        <action name="roomChart" class="com.cineplex.employee.action.ChartsAction" method="getRoomChart">
+            <result name="success" type="json"></result>
+        </action>
+        <action name="filmChart" class="com.cineplex.employee.action.ChartsAction" method="getFilmChart">
+            <result name="success" type="json"></result>
+        </action>
+        <action name="questionChart" class="com.cineplex.employee.action.ChartsAction" method="getQuestionChart">
+            <result name="success" type="json"></result>
+        </action>
+	</package>
+</struts>    

@@ -1,0 +1,11 @@
+<decorators defaultdir="/decorators">
+	<decorator name="member" page="member.jsp">
+		<pattern>/member/*</pattern>
+	</decorator>
+	<decorator name="waiter" page="waiter.jsp">
+		<pattern>/employee/waiter/*</pattern>
+	</decorator>
+	<decorator name="manager" page="manager.jsp">
+		<pattern>/employee/manager/*</pattern>
+	</decorator>
+</decorators> 
